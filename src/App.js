@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { nanoid } from "nanoid";
+import Form from "./components/JobForm/jobForm";
+import List from "./components/JobList/jobList";
 
-function App() {
+export default function App() {
+  const [jobs, setJob] = useState([]);
+
+  const createJob = (newJob) => {
+    const updatedJobs = [...jobs, { id: nanoid(), jobName: newJob }];
+    setJob(updatedJobs);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Form onCreate={createJob} />
+      <List jobs={jobs} />
+    </>
   );
 }
-
-export default App;
